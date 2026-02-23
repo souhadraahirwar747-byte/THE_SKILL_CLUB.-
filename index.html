@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>THE SKILL CLUB - Complete App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #0a0c0f;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        /* Navigation */
+        .top-nav {
+            max-width: 500px;
+            margin: 0 auto 15px;
+            display: flex;
+            gap: 8px;
+            background: #1a1d23;
+            border-radius: 50px;
+            padding: 6px;
+            border: 1px solid #2a2d33;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 12px 8px;
+            border: none;
+            background: transparent;
+            border-radius: 40px;
+            color: #8a8f99;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .nav-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-btn.admin {
+            background: #764ba2;
+            color: white;
+        }
+
+        /* ===== USER SECTION ===== */
+        .user-section {
+            display: block;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .user-section.hidden {
+            display: none;
+        }
+
+        .login-container {
+            width: 100%;
+        }
+
+        .login-box {
+            background: #1a1d23;
+            border-radius: 24px;
+            padding: 25px 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 1px solid #2a2d33;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+            font-size: 28px;
+            background: linear-gradient(135deg, #667eea, #9b87f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            color: #8a8f99;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .toggle-tabs {
+            display: flex;
+            gap: 8px;
+            background: #25282f;
+            padding: 4px;
+            border-radius: 40px;
+            margin-bottom: 25px;
+        }
+
+        .toggle-tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #8a8f99;
+            font-size: 15px;
+        }
+
+        .toggle-tab.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #d1d5db;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #2a2d33;
+            border-radius: 14px;
+            background: #25282f;
+            color: white;
+            font-size: 15px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .packages-container {
+            display: none;
+            width: 100%;
+        }
+
+        .packages-container.active {
+            display: block;
+        }
+
+        .packages-header {
+            background: #1a1d23;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #2a2d33;
+            text-align: center;
+        }
+
+        .packages-header h2 {
+            color: white;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .packages-header p {
+            color: #8a8f99;
+            font-size: 14px;
+        }
+
+        .packages-grid {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .package-card {
+            background: #1a1d23;
+            border: 2px solid #2a2d33;
+            border-radius: 20px;
+            padding: 18px 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .package-card.selected {
+            border-color: #667eea;
+            background: #25282f;
+        }
+
+        .package-info h3 {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .package-info .price {
+            color: #667eea;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .package-badge {
+            background: #667eea;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .payment-section {
+            background: #1a1d23;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #2a2d33;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .payment-section.active {
+            display: block;
+        }
+
+        .upi-id-box {
+            background: #25282f;
+            border: 2px dashed #667eea;
+            border-radius: 16px;
+            padding: 18px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .upi-id-box .label {
+            color: #8a8f99;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .upi-id-box .upi-id {
+            color: #667eea;
+            font-size: 20px;
+            font-weight: 700;
+            word-break: break-all;
+        }
+
+        .payment-btn {
+            width: 100%;
+            padding: 16px;
+            background: #00b300;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .dashboard-container {
+            display: none;
+            width: 100%;
+        }
+
+        .dashboard-container.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            background: #1a1d23;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid #2a2d33;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .header-top h1 {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .logout-btn {
+            background: #dc3546;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #25282f;
+            padding: 10px 14px;
+            border-radius: 30px;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .tsc-badge {
+            background: #667eea;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 11px;
+            color: white;
+        }
+
+        .mobile-menu {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 4px 0 12px 0;
+            scrollbar-width: none;
+        }
+
+        .mobile-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .menu-item {
+            padding: 10px 18px;
+            background: #1a1d23;
+            border: 1px solid #2a2d33;
+            border-radius: 30px;
+            color: #8a8f99;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .menu-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content-area {
+            background: #1a1d23;
+            border-radius: 20px;
+            padding: 18px 14px;
+            border: 1px solid #2a2d33;
+        }
+
+        .income-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .income-card {
+            background: #25282f;
+            border-radius: 16px;
+            padding: 12px 4px;
+            text-align: center;
+            border: 1px solid #2a2d33;
+        }
+
+        .income-card.today { border-color: #8b5cf6; }
+        .income-card.monthly { border-color: #2563eb; }
+        .income-card.alltime { border-color: #059669; }
+
+        .income-label {
+            color: #8a8f99;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .income-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .today .income-value { color: #8b5cf6; }
+        .monthly .income-value { color: #2563eb; }
+        .alltime .income-value { color: #059669; }
+
+        .referral-box {
+            background: #25282f;
+            border-radius: 18px;
+            padding: 18px 14px;
+            margin: 18px 0;
+        }
+
+        .tsc-id-container {
+            background: #1a1d23;
+            padding: 14px;
+            border-radius: 14px;
+            border: 2px dashed #667eea;
+            text-align: center;
+        }
+
+        .tsc-id {
+            color: #667eea;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 8px 0;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .stats-box {
+            background: #25282f;
+            border-radius: 18px;
+            padding: 18px 14px;
+            margin-top: 18px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat-item {
+            padding: 14px;
+            background: #1a1d23;
+            border-radius: 14px;
+        }
+
+        .stat-label {
+            color: #8a8f99;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Withdrawal Section */
+        .withdrawal-box {
+            background: #25282f;
+            border-radius: 18px;
+            padding: 18px 14px;
+            margin: 18px 0;
+        }
+
+        .withdrawal-box h3 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .balance-info {
+            background: #1a1d23;
+            padding: 15px;
+            border-radius: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .balance-info .label {
+            color: #8a8f99;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .balance-info .amount {
+            color: #4ade80;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .withdraw-input-group {
+            margin-bottom: 15px;
+        }
+
+        .withdraw-input-group label {
+            display: block;
+            color: #d1d5db;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .withdraw-input-group input {
+            width: 100%;
+            padding: 14px;
+            background: #1a1d23;
+            border: 2px solid #2a2d33;
+            border-radius: 14px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .withdraw-input-group input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .withdraw-btn {
+            width: 100%;
+            padding: 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .withdraw-btn:disabled {
+            background: #4a4f5a;
+            cursor: not-allowed;
+        }
+
+        .withdraw-history {
+            margin-top: 20px;
+        }
+
+        .withdraw-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #1a1d23;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .withdraw-status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #f39c12;
+            color: white;
+        }
+
+        .status-approved {
+            background: #00b300;
+            color: white;
+        }
+
+        .status-rejected {
+            background: #dc3546;
+            color: white;
+        }
+
+        .hidden-section { display: none; }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #25282f;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        /* ===== ADMIN SECTION - MOBILE FRIENDLY ===== */
+        .admin-section {
+            display: none;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #2a2d33;
+        }
+
+        .admin-header h1 {
+            font-size: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .admin-id {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+
+        .admin-stats-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: white;
+        }
+
+        .back-to-user {
+            background: #25282f;
+            color: white;
+            border: 1px solid #2a2d33;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 13px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .summary-card {
+            background: #1a1d23;
+            border: 1px solid #2a2d33;
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .summary-card .label {
+            color: #8a8f99;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .summary-card .value {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .control-panel {
+            background: #1a1d23;
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #2a2d33;
+        }
+
+        .control-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .control-btn {
+            padding: 12px 8px;
+            background: #25282f;
+            border: 1px solid #2a2d33;
+            border-radius: 12px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .control-btn.refresh {
+            background: #667eea;
+        }
+
+        .control-btn.copy {
+            background: #00b300;
+        }
+
+        .last-update {
+            color: #8a8f99;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .admin-tab {
+            flex: 1;
+            padding: 12px;
+            background: #1a1d23;
+            border: 1px solid #2a2d33;
+            border-radius: 12px;
+            color: #8a8f99;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .admin-tab.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .users-table-container {
+            background: #1a1d23;
+            border-radius: 18px;
+            padding: 12px;
+            border: 1px solid #2a2d33;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+            font-size: 13px;
+        }
+
+        th {
+            background: #25282f;
+            color: #8a8f99;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 10px 6px;
+            text-align: left;
+            border-bottom: 2px solid #2a2d33;
+        }
+
+        td {
+            padding: 10px 6px;
+            color: #d1d5db;
+            border-bottom: 1px solid #2a2d33;
+        }
+
+        .user-badge {
+            background: #667eea20;
+            color: #667eea;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .earning-cell {
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .package-badge {
+            background: #8b5cf6;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            display: inline-block;
+        }
+
+        .status-active {
+            background: #00b300;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            display: inline-block;
+        }
+
+        .status-inactive {
+            background: #dc3546;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 11px;
+            display: inline-block;
+        }
+
+        .copy-icon {
+            cursor: pointer;
+            opacity: 0.6;
+            font-size: 16px;
+        }
+
+        .copy-icon:hover {
+            opacity: 1;
+        }
+
+        .withdraw-requests-container {
+            background: #1a1d23;
+            border-radius: 18px;
+            padding: 16px;
+            border: 1px solid #2a2d33;
+        }
+
+        .request-item {
+            background: #25282f;
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid #2a2d33;
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .request-user {
+            font-weight: 600;
+            color: white;
+        }
+
+        .request-amount {
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .request-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .request-detail span {
+            color: #8a8f99;
+            display: block;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .request-detail strong {
+            color: white;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .approve-btn {
+            flex: 1;
+            padding: 12px;
+            background: #00b300;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .reject-btn {
+            flex: 1;
+            padding: 12px;
+            background: #dc3546;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-login-box {
+            background: #1a1d23;
+            border-radius: 24px;
+            padding: 30px 20px;
+            max-width: 400px;
+            margin: 30px auto;
+            border: 1px solid #2a2d33;
+            text-align: center;
+        }
+
+        .admin-login-box h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .admin-login-box p {
+            color: #8a8f99;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .admin-login-box input {
+            width: 100%;
+            padding: 16px;
+            background: #25282f;
+            border: 2px solid #2a2d33;
+            border-radius: 16px;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .admin-login-box button {
+            width: 100%;
+            padding: 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            left: 20px;
+            background: #00b300;
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-align: center;
+            animation: slideDown 0.3s ease;
+            z-index: 1000;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="top-nav">
+        <button class="nav-btn active" onclick="showUserSection()">👥 User Section</button>
+        <button class="nav-btn admin" onclick="showAdminLogin()">👑 Admin Panel</button>
+    </div>
+
+    <!-- ===== USER SECTION ===== -->
+    <div id="userSection" class="user-section">
+        <!-- Login Page -->
+        <div id="loginPage" class="login-container">
+            <div class="login-box">
+                <div class="brand">
+                    <h1>THE SKILL CLUB</h1>
+                    <p>TSC ID Referral System</p>
+                </div>
+
+                <div class="toggle-tabs">
+                    <button class="toggle-tab" onclick="showLogin()">Login</button>
+                    <button class="toggle-tab active" onclick="showRegister()">Register</button>
+                </div>
+
+                <div id="registerForm">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="regName" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="regUsername" placeholder="Choose username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="regPassword" placeholder="Create password">
+                    </div>
+                    <div class="form-group">
+                        <label>TSC ID (Referral) - Optional</label>
+                        <input type="text" id="regTSC" placeholder="Enter TSC ID if referred">
+                    </div>
+                    <button class="login-btn" onclick="handleRegister()">Create Account</button>
+                </div>
+
+                <div id="loginForm" style="display: none;">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="loginUsername" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter password">
+                    </div>
+                    <button class="login-btn" onclick="handleLogin()">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Packages Page -->
+        <div class="packages-container" id="packagesPage">
+            <div class="packages-header">
+                <h2>Choose Your Package</h2>
+                <p>Select a package to start earning</p>
+            </div>
+
+            <div class="packages-grid">
+                <div class="package-card" onclick="selectPackage('MINI', 99)">
+                    <div class="package-info">
+                        <h3>MINI</h3>
+                        <div class="price">₹99</div>
+                    </div>
+                    <div class="package-badge">Starter</div>
+                </div>
+                <div class="package-card" onclick="selectPackage('BASIC', 199)">
+                    <div class="package-info">
+                        <h3>BASIC</h3>
+                        <div class="price">₹199</div>
+                    </div>
+                    <div class="package-badge">Popular</div>
+                </div>
+                <div class="package-card" onclick="selectPackage('STANDARD', 499)">
+                    <div class="package-info">
+                        <h3>STANDARD</h3>
+                        <div class="price">₹499</div>
+                    </div>
+                    <div class="package-badge">Pro</div>
+                </div>
+                <div class="package-card" onclick="selectPackage('PREMIUM', 999)">
+                    <div class="package-info">
+                        <h3>PREMIUM</h3>
+                        <div class="price">₹999</div>
+                    </div>
+                    <div class="package-badge">Business</div>
+                </div>
+                <div class="package-card" onclick="selectPackage('SUPREME', 4999)">
+                    <div class="package-info">
+                        <h3>SUPREME</h3>
+                        <div class="price">₹4999</div>
+                    </div>
+                    <div class="package-badge">Ultimate</div>
+                </div>
+            </div>
+
+            <div class="payment-section" id="paymentSection">
+                <h3 style="color: white; text-align: center; margin-bottom: 15px; font-size: 18px;">Complete Payment</h3>
+                <div class="upi-id-box">
+                    <div class="label">Pay to this UPI ID</div>
+                    <div class="upi-id">souhadra@okhdfcbank</div>
+                </div>
+                <div style="color: white; margin: 15px 0; text-align: center;">
+                    <strong>Package: <span id="selectedPackageName">MINI</span></strong><br>
+                    Amount: <strong>₹<span id="selectedPackagePrice">99</span></strong>
+                </div>
+                <button class="payment-btn" onclick="confirmPayment()">✓ I've Paid</button>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard-container" id="dashboardContainer">
+            <div class="dashboard-header">
+                <div class="header-top">
+                    <h1>THE SKILL CLUB</h1>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="displayName">Username</span>
+                    <span class="tsc-badge" id="displayTSC">TSC12345</span>
+                </div>
+            </div>
+
+            <div class="mobile-menu">
+                <button class="menu-item active" onclick="showSection('overview')">📊 Overview</button>
+                <button class="menu-item" onclick="showSection('earnings')">💰 Earnings</button>
+                <button class="menu-item" onclick="showSection('referrals')">👥 Referrals</button>
+                <button class="menu-item" onclick="showSection('withdraw')">💳 Withdraw</button>
+            </div>
+
+            <div class="content-area" id="contentArea">
+                <!-- Overview Section -->
+                <div id="overviewSection">
+                    <div class="income-cards">
+                        <div class="income-card today">
+                            <div class="income-label">TODAY</div>
+                            <div class="income-value" id="todayIncome">₹0</div>
+                        </div>
+                        <div class="income-card monthly">
+                            <div class="income-label">MONTHLY</div>
+                            <div class="income-value" id="monthlyIncome">₹0</div>
+                        </div>
+                        <div class="income-card alltime">
+                            <div class="income-label">TOTAL</div>
+                            <div class="income-value" id="totalIncome">₹0</div>
+                        </div>
+                    </div>
+
+                    <div class="referral-box">
+                        <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">🔗 Your TSC ID</h3>
+                        <div class="tsc-id-container">
+                            <div class="tsc-id" id="tscIdDisplay">TSC12345</div>
+                            <button class="copy-btn" onclick="copyTSC()">Copy TSC ID</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-box">
+                        <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">📊 Stats</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-label">Team Size</div>
+                                <div class="stat-number" id="teamSize">0</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Commission</div>
+                                <div class="stat-number">50%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings Section -->
+                <div id="earningsSection" class="hidden-section">
+                    <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">💰 Earnings</h3>
+                    <div id="earningsList"></div>
+                </div>
+
+                <!-- Referrals Section -->
+                <div id="referralsSection" class="hidden-section">
+                    <h3 style="color: white; font-size: 16px; margin-bottom: 12px;">👥 Referrals</h3>
+                    <div id="referralsList"></div>
+                </div>
+
+                <!-- Withdraw Section -->
+                <div id="withdrawSection" class="hidden-section">
+                    <div class="withdrawal-box">
+                        <h3>💳 Withdraw Funds</h3>
+                        <div class="balance-info">
+                            <div class="label">Available Balance</div>
+                            <div class="amount" id="availableBalance">₹0</div>
+                        </div>
+
+                        <div class="withdraw-input-group">
+                            <label>Amount to Withdraw (₹)</label>
+                            <input type="number" id="withdrawAmount" placeholder="Enter amount" min="50">
+                        </div>
+
+                        <div class="withdraw-input-group">
+                            <label>Your UPI ID</label>
+                            <input type="text" id="withdrawUpi" placeholder="username@okhdfcbank">
+                        </div>
+
+                        <button class="withdraw-btn" id="withdrawBtn" onclick="requestWithdrawal()">Request Withdrawal</button>
+
+                        <div class="withdraw-history" id="withdrawHistory">
+                            <h4 style="color: white; margin: 20px 0 10px;">Recent Requests</h4>
+                            <div id="withdrawalsList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ADMIN SECTION ===== -->
+    <div id="adminSection" class="admin-section">
+        <div id="adminLoginPage">
+            <div class="admin-login-box">
+                <h2>🔐 Admin Panel</h2>
+                <p>Enter your admin ID</p>
+                <input type="password" id="adminIdInput" placeholder="****" maxlength="4">
+                <button onclick="verifyAdmin()">Access Panel</button>
+            </div>
+        </div>
+
+        <div id="adminDashboard" class="hidden">
+            <div class="admin-header">
+                <h1>
+                    👑 ADMIN PANEL
+                    <span class="admin-id">ID: 9329</span>
+                </h1>
+                <div class="admin-stats-row">
+                    <span class="stat-badge" id="totalUsers">Users: 0</span>
+                    <span class="stat-badge" id="totalEarnings">Earnings: ₹0</span>
+                    <span class="stat-badge" id="pendingRequests">Withdraw: 0</span>
+                </div>
+                <button class="back-to-user" onclick="showUserSection()">← Back to User Section</button>
+            </div>
+
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="label">Total Users</div>
+                    <div class="value" id="summaryTotalUsers">0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="label">Total Earnings</div>
+                    <div class="value" id="summaryTotalEarnings">₹0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="label">Active Packages</div>
+                    <div class="value" id="activePackages">0</div>
+                </div>
+                <div class="summary-card">
+                    <div class="label">Team Size</div>
+                    <div class="value" id="totalTeamSize">0</div>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="showAdminTab('users')">👥 Users</button>
+                <button class="admin-tab" onclick="showAdminTab('withdrawals')">💳 Withdrawals</button>
+            </div>
+
+            <div id="adminUsersTab">
+                <div class="control-panel">
+                    <div class="control-buttons">
+                        <button class="control-btn refresh" onclick="loadAllUsers()">🔄 Refresh</button>
+                        <button class="control-btn copy" onclick="copyAllData()">📋 Copy</button>
+                        <button class="control-btn" onclick="exportToCSV()">📥 CSV</button>
+                    </div>
+                    <div class="last-update" id="lastUpdate">
+                        Updated: Just now
+                    </div>
+                </div>
+
+                <div class="users-table-container">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>TSC</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Referred</th>
+                                <th>Package</th>
+                                <th>Today</th>
+                                <th>Total</th>
+                                <th>Team</th>
+                                <th>Status</th>
+                                <th>Copy</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr><td colspan="11" style="text-align: center; padding: 30px;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="adminWithdrawalsTab" class="hidden">
+                <div class="control-panel">
+                    <div class="control-buttons">
+                        <button class="control-btn refresh" onclick="loadWithdrawRequests()">🔄 Refresh</button>
+                        <button class="control-btn copy" onclick="copyWithdrawalsData()">📋 Copy</button>
+                    </div>
+                </div>
+
+                <div class="withdraw-requests-container" id="withdrawRequestsList">
+                    Loading withdrawal requests...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA SAVE SYSTEM =====
+        function saveUser(user) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        function getUser(username) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            return users.find(u => u.username === username);
+        }
+
+        function updateUser(updatedUser) {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let index = users.findIndex(u => u.username === updatedUser.username);
+            if (index !== -1) {
+                users[index] = updatedUser;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+        }
+
+        function getAllUsers() {
+            return JSON.parse(localStorage.getItem('users')) || [];
+        }
+
+        // Withdrawal Functions
+        function saveWithdrawalRequest(request) {
+            let requests = JSON.parse(localStorage.getItem('withdrawals')) || [];
+            requests.push(request);
+            localStorage.setItem('withdrawals', JSON.stringify(requests));
+        }
+
+        function getWithdrawalRequests(username = null) {
+            let requests = JSON.parse(localStorage.getItem('withdrawals')) || [];
+            if (username) {
+                return requests.filter(r => r.username === username);
+            }
+            return requests;
+        }
+
+        function updateWithdrawalRequest(requestId, updates) {
+            let requests = JSON.parse(localStorage.getItem('withdrawals')) || [];
+            let index = requests.findIndex(r => r.id === requestId);
+            if (index !== -1) {
+                requests[index] = { ...requests[index], ...updates };
+                localStorage.setItem('withdrawals', JSON.stringify(requests));
+            }
+        }
+
+        function generateTSCId() {
+            return 'TSC' + Math.floor(10000 + Math.random() * 90000);
+        }
+
+        let currentUser = null;
+        let selectedPackage = { name: 'MINI', price: 99 };
+
+        // ===== NAVIGATION =====
+        function showUserSection() {
+            document.getElementById('userSection').classList.remove('hidden');
+            document.getElementById('adminSection').classList.remove('active');
+            document.querySelectorAll('.nav-btn')[0].classList.add('active');
+            document.querySelectorAll('.nav-btn')[1].classList.remove('active');
+        }
+
+        function showAdminLogin() {
+            document.getElementById('userSection').classList.add('hidden');
+            document.getElementById('adminSection').classList.add('active');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminLoginPage').style.display = 'block';
+            document.querySelectorAll('.nav-btn')[1].classList.add('active');
+            document.querySelectorAll('.nav-btn')[0].classList.remove('active');
+        }
+
+        // ===== USER FUNCTIONS =====
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.querySelectorAll('.toggle-tab')[0].classList.add('active');
+            document.querySelectorAll('.toggle-tab')[1].classList.remove('active');
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.querySelectorAll('.toggle-tab')[1].classList.add('active');
+            document.querySelectorAll('.toggle-tab')[0].classList.remove('active');
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const referredBy = document.getElementById('regTSC').value.trim();
+
+            if (!name || !username || !password) {
+                alert('Please fill all fields!');
+                return;
+            }
+
+            if (getUser(username)) {
+                alert('Username already exists!');
+                return;
+            }
+
+            currentUser = {
+                name: name,
+                username: username,
+                password: password,
+                tscId: generateTSCId(),
+                referredBy: referredBy || null,
+                package: null,
+                earnings: { today: 0, monthly: 0, total: 0 },
+                stats: { teamSize: 0 },
+                transactions: [],
+                referrals: [],
+                withdrawals: [],
+                registerDate: new Date().toLocaleString()
+            };
+
+            saveUser(currentUser);
+            alert('Registration successful! Your TSC ID: ' + currentUser.tscId);
+            showLogin();
+        }
+
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                alert('Please enter username and password!');
+                return;
+            }
+
+            currentUser = getUser(username);
+            if (!currentUser || currentUser.password !== password) {
+                alert('Wrong username or password!');
+                return;
+            }
+
+            if (!currentUser.package) {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('packagesPage').classList.add('active');
+            } else {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('dashboardContainer').classList.add('active');
+                updateDashboard();
+            }
+        }
+
+        function selectPackage(name, price) {
+            selectedPackage = { name, price };
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            document.getElementById('paymentSection').classList.add('active');
+            document.getElementById('selectedPackageName').textContent = name;
+            document.getElementById('selectedPackagePrice').textContent = price;
+        }
+
+        function confirmPayment() {
+            currentUser.package = selectedPackage.name;
+            
+            currentUser.transactions.push({
+                type: 'Package Purchase',
+                amount: selectedPackage.price,
+                date: new Date().toLocaleString()
+            });
+
+            if (currentUser.referredBy) {
+                const commission = selectedPackage.price * 0.5;
+                giveCommission(currentUser.referredBy, commission, currentUser.username, selectedPackage.name);
+            }
+
+            updateUser(currentUser);
+            alert('Payment confirmed! Account activated.');
+            document.getElementById('packagesPage').classList.remove('active');
+            document.getElementById('dashboardContainer').classList.add('active');
+            updateDashboard();
+        }
+
+        function giveCommission(referrerTSC, commission, newUser, packageName) {
+            let users = getAllUsers();
+            let referrer = users.find(u => u.tscId === referrerTSC);
+            
+            if (referrer) {
+                referrer.earnings.today += commission;
+                referrer.earnings.monthly += commission;
+                referrer.earnings.total += commission;
+                
+                referrer.referrals.push({
+                    username: newUser,
+                    package: packageName,
+                    earned: commission,
+                    date: new Date().toLocaleString()
+                });
+                
+                referrer.transactions.push({
+                    type: 'Referral Commission',
+                    amount: commission,
+                    from: newUser,
+                    date: new Date().toLocaleString()
+                });
+                
+                referrer.stats.teamSize = referrer.referrals.length;
+                updateUser(referrer);
+            }
+        }
+
+        function updateDashboard() {
+            document.getElementById('displayName').textContent = currentUser.name;
+            document.getElementById('displayTSC').textContent = currentUser.tscId;
+            document.getElementById('tscIdDisplay').textContent = currentUser.tscId;
+            
+            document.getElementById('todayIncome').textContent = `₹${currentUser.earnings.today}`;
+            document.getElementById('monthlyIncome').textContent = `₹${currentUser.earnings.monthly}`;
+            document.getElementById('totalIncome').textContent = `₹${currentUser.earnings.total}`;
+            document.getElementById('teamSize').textContent = currentUser.stats.teamSize;
+            document.getElementById('availableBalance').textContent = `₹${currentUser.earnings.total}`;
+            
+            updateEarningsList();
+            updateReferralsList();
+            updateUserWithdrawals();
+        }
+
+        function updateEarningsList() {
+            const list = document.getElementById('earningsList');
+            if (!currentUser.transactions?.length) {
+                list.innerHTML = '<div style="color: #8a8f99; text-align: center;">No earnings</div>';
+                return;
+            }
+            
+            let html = '';
+            currentUser.transactions.slice().reverse().forEach(t => {
+                html += `<div class="transaction-item">
+                    <div><div style="color: white;">${t.type}</div><div style="color: #8a8f99; font-size: 11px;">${t.date}</div></div>
+                    <div style="color: #4ade80;">+₹${t.amount}</div>
+                </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function updateReferralsList() {
+            const list = document.getElementById('referralsList');
+            if (!currentUser.referrals?.length) {
+                list.innerHTML = '<div style="color: #8a8f99; text-align: center;">No referrals</div>';
+                return;
+            }
+            
+            let html = '';
+            currentUser.referrals.slice().reverse().forEach(r => {
+                html += `<div class="transaction-item">
+                    <div><div style="color: white;">${r.username}</div><div style="color: #8a8f99; font-size: 11px;">${r.package}</div></div>
+                    <div style="color: #4ade80;">+₹${r.earned}</div>
+                </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        // Withdrawal Functions
+        function requestWithdrawal() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const upiId = document.getElementById('withdrawUpi').value.trim();
+
+            if (!amount || amount < 50) {
+                alert('Minimum withdrawal amount is ₹50');
+                return;
+            }
+
+            if (!upiId) {
+                alert('Please enter your UPI ID');
+                return;
+            }
+
+            if (amount > currentUser.earnings.total) {
+                alert('Insufficient balance!');
+                return;
+            }
+
+            const withdrawalRequest = {
+                id: 'WD' + Date.now(),
+                username: currentUser.username,
+                name: currentUser.name,
+                tscId: currentUser.tscId,
+                amount: amount,
+                upiId: upiId,
+                status: 'pending',
+                date: new Date().toLocaleString(),
+                processedDate: null
+            };
+
+            // Deduct from user balance
+            currentUser.earnings.total -= amount;
+            currentUser.earnings.monthly -= amount;
+            
+            currentUser.withdrawals = currentUser.withdrawals || [];
+            currentUser.withdrawals.push(withdrawalRequest);
+            
+            updateUser(currentUser);
+            saveWithdrawalRequest(withdrawalRequest);
+            
+            alert('Withdrawal request sent successfully!');
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('withdrawUpi').value = '';
+            updateDashboard();
+            updateUserWithdrawals();
+        }
+
+        function updateUserWithdrawals() {
+            const list = document.getElementById('withdrawalsList');
+            const userWithdrawals = currentUser.withdrawals || [];
+            
+            if (userWithdrawals.length === 0) {
+                list.innerHTML = '<div style="color: #8a8f99; text-align: center;">No withdrawal requests</div>';
+                return;
+            }
+
+            let html = '';
+            userWithdrawals.slice().reverse().forEach(w => {
+                const statusClass = w.status === 'approved' ? 'status-approved' : 
+                                  w.status === 'rejected' ? 'status-rejected' : 'status-pending';
+                html += `
+                    <div class="withdraw-item">
+                        <div>
+                            <div style="color: white;">₹${w.amount}</div>
+                            <div style="color: #8a8f99; font-size: 11px;">${w.date}</div>
+                        </div>
+                        <div><span class="withdraw-status ${statusClass}">${w.status}</span></div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('#overviewSection, #earningsSection, #referralsSection, #withdrawSection').forEach(el => {
+                el.style.display = 'none';
+            });
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            
+            if (section === 'overview') {
+                document.getElementById('overviewSection').style.display = 'block';
+                document.querySelectorAll('.menu-item')[0].classList.add('active');
+            } else if (section === 'earnings') {
+                document.getElementById('earningsSection').style.display = 'block';
+                document.querySelectorAll('.menu-item')[1].classList.add('active');
+                updateEarningsList();
+            } else if (section === 'referrals') {
+                document.getElementById('referralsSection').style.display = 'block';
+                document.querySelectorAll('.menu-item')[2].classList.add('active');
+                updateReferralsList();
+            } else if (section === 'withdraw') {
+                document.getElementById('withdrawSection').style.display = 'block';
+                document.querySelectorAll('.menu-item')[3].classList.add('active');
+                updateUserWithdrawals();
+            }
+        }
+
+        function copyTSC() {
+            navigator.clipboard.writeText(currentUser.tscId).then(() => {
+                alert('TSC ID copied!');
+            });
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('dashboardContainer').classList.remove('active');
+            document.getElementById('packagesPage').classList.remove('active');
+            document.getElementById('loginPage').style.display = 'block';
+            showRegister();
+        }
+
+        // ===== ADMIN FUNCTIONS =====
+        const ADMIN_ID = '9329';
+
+        function verifyAdmin() {
+            if (document.getElementById('adminIdInput').value === ADMIN_ID) {
+                document.getElementById('adminLoginPage').style.display = 'none';
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                loadAllUsers();
+                loadWithdrawRequests();
+                setInterval(loadAllUsers, 5000);
+                setInterval(loadWithdrawRequests, 5000);
+            } else {
+                alert('❌ Wrong Admin ID!');
+            }
+        }
+
+        function showAdminTab(tab) {
+            if (tab === 'users') {
+                document.getElementById('adminUsersTab').classList.remove('hidden');
+                document.getElementById('adminWithdrawalsTab').classList.add('hidden');
+                document.querySelectorAll('.admin-tab')[0].classList.add('active');
+                document.querySelectorAll('.admin-tab')[1].classList.remove('active');
+                loadAllUsers();
+            } else {
+                document.getElementById('adminUsersTab').classList.add('hidden');
+                document.getElementById('adminWithdrawalsTab').classList.remove('hidden');
+                document.querySelectorAll('.admin-tab')[1].classList.add('active');
+                document.querySelectorAll('.admin-tab')[0].classList.remove('active');
+                loadWithdrawRequests();
+            }
+        }
+
+        function loadAllUsers() {
+            const users = getAllUsers();
+            displayUsers(users);
+            updateSummary(users);
+            document.getElementById('lastUpdate').textContent = 
+                'Updated: ' + new Date().toLocaleTimeString();
+        }
+
+        function displayUsers(users) {
+            const tbody = document.getElementById('usersTableBody');
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="11" style="text-align: center;">No users</td></tr>';
+                return;
+            }
+
+            let html = '';
+            users.sort((a, b) => (b.earnings?.total || 0) - (a.earnings?.total || 0));
+
+            users.forEach((user, index) => {
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><span class="user-badge">${user.tscId || 'N/A'}</span></td>
+                        <td>${user.name || user.username}</td>
+                        <td>${user.username}</td>
+                        <td>${user.referredBy || 'Direct'}</td>
+                        <td>${user.package ? `<span class="package-badge">${user.package}</span>` : '-'}</td>
+                        <td class="earning-cell">₹${user.earnings?.today || 0}</td>
+                        <td class="earning-cell">₹${user.earnings?.total || 0}</td>
+                        <td>${user.stats?.teamSize || 0}</td>
+                        <td><span class="${user.package ? 'status-active' : 'status-inactive'}">${user.package ? 'Active' : 'Inactive'}</span></td>
+                        <td><span class="copy-icon" onclick="copyUserData('${user.username}')">📋</span></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function updateSummary(users) {
+            const total = users.length;
+            const earnings = users.reduce((sum, u) => sum + (u.earnings?.total || 0), 0);
+            const active = users.filter(u => u.package).length;
+            const team = users.reduce((sum, u) => sum + (u.stats?.teamSize || 0), 0);
+            const pendingWithdrawals = getWithdrawalRequests().filter(w => w.status === 'pending').length;
+            
+            document.getElementById('summaryTotalUsers').textContent = total;
+            document.getElementById('summaryTotalEarnings').textContent = `₹${earnings}`;
+            document.getElementById('activePackages').textContent = active;
+            document.getElementById('totalTeamSize').textContent = team;
+            document.getElementById('totalUsers').textContent = `Users: ${total}`;
+            document.getElementById('totalEarnings').textContent = `Earnings: ₹${earnings}`;
+            document.getElementById('pendingRequests').textContent = `Withdraw: ${pendingWithdrawals}`;
+        }
+
+        function loadWithdrawRequests() {
+            const requests = getWithdrawalRequests();
+            displayWithdrawRequests(requests);
+        }
+
+        function displayWithdrawRequests(requests) {
+            const container = document.getElementById('withdrawRequestsList');
+            if (requests.length === 0) {
+                container.innerHTML = '<div style="color: #8a8f99; text-align: center;">No withdrawal requests</div>';
+                return;
+            }
+
+            let html = '';
+            requests.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            requests.forEach(req => {
+                const statusClass = req.status === 'approved' ? 'status-approved' : 
+                                   req.status === 'rejected' ? 'status-rejected' : 'status-pending';
+                
+                html += `
+                    <div class="request-item">
+                        <div class="request-header">
+                            <span class="request-user">${req.name} (${req.tscId})</span>
+                            <span class="request-amount">₹${req.amount}</span>
+                        </div>
+                        <div class="request-details">
+                            <div class="request-detail">
+                                <span>Username</span>
+                                <strong>${req.username}</strong>
+                            </div>
+                            <div class="request-detail">
+                                <span>UPI ID</span>
+                                <strong>${req.upiId}</strong>
+                            </div>
+                            <div class="request-detail">
+                                <span>Date</span>
+                                <strong>${req.date}</strong>
+                            </div>
+                            <div class="request-detail">
+                                <span>Status</span>
+                                <strong><span class="withdraw-status ${statusClass}">${req.status}</span></strong>
+                            </div>
+                        </div>
+                        ${req.status === 'pending' ? `
+                            <div class="request-actions">
+                                <button class="approve-btn" onclick="approveWithdrawal('${req.id}')">✅ Approve</button>
+                                <button class="reject-btn" onclick="rejectWithdrawal('${req.id}')">❌ Reject</button>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function approveWithdrawal(requestId) {
+            updateWithdrawalRequest(requestId, { status: 'approved', processedDate: new Date().toLocaleString() });
+            loadWithdrawRequests();
+            loadAllUsers();
+            showNotification('✅ Withdrawal approved');
+        }
+
+        function rejectWithdrawal(requestId) {
+            const request = getWithdrawalRequests().find(r => r.id === requestId);
+            if (request && confirm('Reject this withdrawal request?')) {
+                // Refund amount to user
+                const user = getUser(request.username);
+                if (user) {
+                    user.earnings.total += request.amount;
+                    user.earnings.monthly += request.amount;
+                    updateUser(user);
+                }
+                updateWithdrawalRequest(requestId, { status: 'rejected', processedDate: new Date().toLocaleString() });
+                loadWithdrawRequests();
+                loadAllUsers();
+                showNotification('❌ Withdrawal rejected');
+            }
+        }
+
+        function copyAllData() {
+            const users = getAllUsers();
+            let text = 'TSC ID\tName\tUsername\tReferred By\tPackage\tToday\tTotal\tTeam\tStatus\n';
+            users.forEach(u => {
+                text += `${u.tscId}\t${u.name}\t${u.username}\t${u.referredBy || 'Direct'}\t${u.package || '-'}\t₹${u.earnings?.today || 0}\t₹${u.earnings?.total || 0}\t${u.stats?.teamSize || 0}\t${u.package ? 'Active' : 'Inactive'}\n`;
+            });
+            navigator.clipboard.writeText(text).then(() => showNotification('✅ All data copied!'));
+        }
+
+        function copyWithdrawalsData() {
+            const requests = getWithdrawalRequests();
+            let text = 'Date\tName\tTSC ID\tAmount\tUPI ID\tStatus\n';
+            requests.forEach(r => {
+                text += `${r.date}\t${r.name}\t${r.tscId}\t₹${r.amount}\t${r.upiId}\t${r.status}\n`;
+            });
+            navigator.clipboard.writeText(text).then(() => showNotification('✅ Withdrawal data copied!'));
+        }
+
+        function copyUserData(username) {
+            const user = getUser(username);
+            if (user) {
+                const text = `TSC: ${user.tscId}\nName: ${user.name}\nUsername: ${user.username}\nReferred: ${user.referredBy || 'Direct'}\nPackage: ${user.package || 'None'}\nToday: ₹${user.earnings?.today || 0}\nTotal: ₹${user.earnings?.total || 0}\nTeam: ${user.stats?.teamSize || 0}`;
+                navigator.clipboard.writeText(text).then(() => showNotification(`✅ ${username}'s data copied`));
+            }
+        }
+
+        function exportToCSV() {
+            const users = getAllUsers();
+            let csv = 'TSC ID,Name,Username,Referred By,Package,Today,Total,Team,Status\n';
+            users.forEach(u => {
+                csv += `"${u.tscId}","${u.name}","${u.username}","${u.referredBy || 'Direct'}","${u.package || 'None'}","${u.earnings?.today || 0}","${u.earnings?.total || 0}","${u.stats?.teamSize || 0}","${u.package ? 'Active' : 'Inactive'}"\n`;
+            });
+            navigator.clipboard.writeText(csv).then(() => showNotification('✅ CSV copied!'));
+        }
+
+        function showNotification(msg) {
+            const notif = document.createElement('div');
+            notif.className = 'copy-notification';
+            notif.textContent = msg;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2000);
+        }
+    </script>
+</body>
+</html>
